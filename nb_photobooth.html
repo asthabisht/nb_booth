@@ -114,20 +114,14 @@ Minimum version required to store current data is: `+i+`.
   .spin{width:46px;height:46px;border:3px solid rgba(0,0,0,.22);border-top-color:var(--blue);border-radius:50%;animation:spin 1s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}
 
-  /* ---- PRINT: composite the photo into the black polaroid frame, borderless 4x6 ---- */
+  /* ---- PRINT: the black polaroid, PORTRAIT 4x6, no rotation (Epson SL-D500) ---- */
   .print-only{display:none}
   @media print{
-    /* the CP-D70's 4x6 sheet is LANDSCAPE (158x104mm incl. bleed) — print the rotated polaroid
-       edge to edge on it; a portrait page got laid sideways, cropped, with a white band */
-    @page{size:158mm 104mm;margin:0}
+    @page{size:102mm 152mm;margin:0}   /* portrait 4x6 (10x15 cm), borderless */
     html,body{height:auto;margin:0;padding:0;background:#fff;display:block;overflow:visible}
     .stage,.print-overlay{display:none!important}
-    .print-only{display:block;width:158mm;height:104mm;overflow:hidden;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-    /* printer correction (measured from edge tests, 4 Nov 2026): this CP-D70 lands every print
-       ~2mm toward the sheet's top edge, tilted ~0.5° clockwise — nudge it back. If the printer is
-       serviced or swapped, set both to 0 and re-run the edge test. */
-    .print-only img{display:block;width:100%;height:100%;object-fit:cover;
-      transform:translateY(2mm) rotate(-0.5deg);transform-origin:center}
+    .print-only{display:block;width:102mm;height:152mm;overflow:hidden;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .print-only img{display:block;width:100%;height:100%;object-fit:cover}
   }
 </style>
 
@@ -305,7 +299,7 @@ Minimum version required to store current data is: `+i+`.
     stopCam(); go("done");
     $("qrSub").textContent = "Preparing your photo…";
     framedJpeg = await composePolaroid();           // one flattened polaroid image
-    $("donePreview").src = framedJpeg; $("printImg").src = await rotateForPrint(framedJpeg);
+    $("donePreview").src = framedJpeg; $("printImg").src = framedJpeg;   // portrait, no rotation
     renderQR(CONFIG.QR_FALLBACK_URL);
     var url = CONFIG.QR_FALLBACK_URL;
     try{
