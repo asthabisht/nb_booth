@@ -1,0 +1,10 @@
+{
+  "name": "newbalance-photobooth",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Hollister Hangouts event photobooth — Netlify Function uploads each photo to Cloudflare R2; the returned URL drives the QR.",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.600.0"
+  }
+}
